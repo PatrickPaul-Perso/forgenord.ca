@@ -1,7 +1,14 @@
 {
+  "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "forgenord-ca",
   "compatibility_date": "2026-09-30",
   "assets": {
     "directory": "./dist"
-  }
+  },
+  "routes": [
+    {
+      "pattern": "forgenord.ca",
+      "custom_domain": true
+    }
+  ]
 }
