@@ -34,6 +34,7 @@ const copy = {
     aboutText: 'Forge Nord est le point de rencontre de projets indépendants qui mêlent numérique, objets et création. Chaque initiative évolue à son rythme; cette page en trace la carte.',
     footer: 'Fait au Canada',
     footerTop: 'Retour en haut',
+    aiDisclosure: 'L’intelligence artificielle générative a été utilisée pour la conception de ce site Web. Tout le contenu a été révisé par une personne avant sa publication.',
   },
   en: {
     locale: 'en-CA',
@@ -66,6 +67,7 @@ const copy = {
     aboutText: 'Forge Nord is a meeting point for independent projects across digital work, connected objects, and creative practice. Each initiative grows at its own pace; this page maps the way.',
     footer: 'Made in Canada',
     footerTop: 'Back to top',
+    aiDisclosure: 'Generative artificial intelligence was used in the design of this website. All content was reviewed by a person before publication.',
   },
 } as const;
 
@@ -162,9 +164,12 @@ const currentPath = `/${language}/`;
       </main>
 
       <footer class="site-footer">
-        <span>© {new Date().getFullYear()} Forge Nord</span>
-        <span>{t.footer}</span>
-        <a href="#top">forgenord.ca <span aria-hidden="true">↑</span><span class="sr-only">— {t.footerTop}</span></a>
+        <div class="footer-main">
+          <span>© {new Date().getFullYear()} Forge Nord</span>
+          <span>{t.footer}</span>
+          <a href="#top">forgenord.ca <span aria-hidden="true">↑</span><span class="sr-only">— {t.footerTop}</span></a>
+        </div>
+        <p class="ai-disclosure">{t.aiDisclosure}</p>
       </footer>
     </div>
     <script is:inline>
@@ -259,7 +264,9 @@ const currentPath = `/${language}/`;
   .about-content { display: grid; grid-template-columns: 1fr 1fr; align-items: end; gap: 50px; }
   .about-content h2 { font-size: clamp(32px, 3vw, 45px); }
   .about-content p { max-width: 420px; margin-bottom: 4px; color: #aebfc7; font-size: 15px; line-height: 1.75; }
-  .site-footer { display: flex; align-items: center; justify-content: space-between; gap: 25px; min-height: 95px; border-top: 1px solid #29404c; color: #829ba5; font-size: 11px; letter-spacing: .04em; }
+  .site-footer { border-top: 1px solid #29404c; color: #829ba5; font-size: 11px; letter-spacing: .04em; }
+  .footer-main { display: flex; align-items: center; justify-content: space-between; gap: 25px; min-height: 82px; }
+  .ai-disclosure { max-width: 800px; margin: 0; padding: 0 0 28px; color: #829ba5; line-height: 1.6; }
   .site-footer a { text-decoration: none; }
   .site-footer a:hover { color: #d4f0f2; }
   .site-footer a span[aria-hidden] { margin-left: 10px; color: #9bd9e0; font-size: 16px; }
@@ -290,8 +297,9 @@ const currentPath = `/${language}/`;
     .project-card { min-height: 275px; }
     .about-section { padding: 57px 0 78px; }
     .about-content { grid-template-columns: 1fr; gap: 18px; }
-    .site-footer { flex-wrap: wrap; padding: 28px 0; min-height: 0; }
-    .site-footer > span:nth-child(2) { display: none; }
+    .footer-main { flex-wrap: wrap; padding: 24px 0 18px; min-height: 0; }
+    .footer-main > span:nth-child(2) { display: none; }
+    .ai-disclosure { padding-bottom: 28px; }
   }
   @media (max-width: 400px) {
     .site-header { gap: 12px; }
