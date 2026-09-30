@@ -5,6 +5,7 @@
   "assets": {
     "directory": "./dist"
   },
+  "previews": {},
   "routes": [
     {
       "pattern": "forgenord.ca",
