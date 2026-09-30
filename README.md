@@ -14,6 +14,8 @@ Le site est développé avec Astro et sera déployé sur Cloudflare Workers.
 
 ## Développement
 
+La racine `/` affiche directement l’accueil et suit la langue préférée du navigateur entre le français et l’anglais. Le sélecteur FR/EN permet de changer de langue et mémorise ce choix dans le navigateur.
+
 Docker est l’environnement de développement commun. L’image Node est fixée dans `compose.yaml` et les dépendances dans `package-lock.json` ; les commandes Node.js, npm, Astro et Wrangler s’exécutent dans le conteneur, sans installation locale de Node.
 
 Depuis la racine du dépôt, installer les dépendances puis démarrer le serveur :
