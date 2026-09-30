@@ -20,13 +20,14 @@ const copy = {
     heroNote: 'Imaginer. Créer. Partager.',
     projectsEyebrow: '01 / Territoires d’exploration',
     projectsTitle: 'Des projets aux horizons variés.',
-    projectsIntro: 'Quatre espaces en préparation, chacun avec sa propre direction et sa propre adresse.',
+    projectsIntro: 'Quatre espaces, chacun avec sa propre direction et sa propre adresse.',
     soon: 'Bientôt',
     planned: 'Adresse prévue',
+    live: 'En ligne',
     projects: [
       { number: '01', name: 'NFC', category: 'Interaction', description: 'Des expériences et des jeux qui prennent vie au contact d’un objet.', domain: 'nfc.forgenord.ca' },
       { number: '02', name: 'Labs', category: 'Exploration', description: 'Un terrain d’essai pour les prototypes, l’IoT et les idées à éprouver.', domain: 'labs.forgenord.ca' },
-      { number: '03', name: 'Portfolio', category: 'Parcours', description: 'Une sélection de réalisations, de savoir-faire et de méthodes de travail.', domain: 'portfolio.forgenord.ca' },
+      { number: '03', name: 'Portfolio', category: 'Parcours', description: 'Le parcours et les domaines d’expertise technique de Patrick Paul.', domain: 'portfolio.forgenord.ca', live: true },
       { number: '04', name: 'Giocoso', category: 'Création', description: 'L’espace dédié aux projets de Giocoso Creation et aux idées ludiques.', domain: 'giocoso.forgenord.ca' },
     ],
     aboutEyebrow: '02 / À propos',
@@ -34,7 +35,7 @@ const copy = {
     aboutText: 'Forge Nord est le point de rencontre de projets indépendants qui mêlent numérique, objets et création. Chaque initiative évolue à son rythme; cette page en trace la carte.',
     footer: 'Fait au Canada',
     footerTop: 'Retour en haut',
-    aiDisclosure: 'L’intelligence artificielle générative a été utilisée pour la conception de ce site Web. Tout le contenu a été révisé par une personne avant sa publication.',
+    aiDisclosure: 'L’IA générative a servi d’assistante à l’ingénierie et à la rédaction de ce site Web. Patrick Paul a révisé et approuvé l’ensemble du contenu publié et des décisions techniques.',
   },
   en: {
     locale: 'en-CA',
@@ -53,13 +54,14 @@ const copy = {
     heroNote: 'Imagine. Create. Share.',
     projectsEyebrow: '01 / Areas of exploration',
     projectsTitle: 'Projects with different horizons.',
-    projectsIntro: 'Four spaces in the making, each with its own direction and address.',
+    projectsIntro: 'Four spaces, each with its own direction and address.',
     soon: 'Coming soon',
     planned: 'Planned address',
+    live: 'Live',
     projects: [
       { number: '01', name: 'NFC', category: 'Interaction', description: 'Experiences and games that come to life through a physical touchpoint.', domain: 'nfc.forgenord.ca' },
       { number: '02', name: 'Labs', category: 'Exploration', description: 'A testing ground for prototypes, IoT, and ideas worth putting to work.', domain: 'labs.forgenord.ca' },
-      { number: '03', name: 'Portfolio', category: 'Practice', description: 'A selection of work, capabilities, and ways of making things.', domain: 'portfolio.forgenord.ca' },
+      { number: '03', name: 'Portfolio', category: 'Practice', description: 'Patrick Paul’s technical background and areas of expertise.', domain: 'portfolio.forgenord.ca', live: true },
       { number: '04', name: 'Giocoso', category: 'Creation', description: 'A space for Giocoso Creation projects and playful ideas.', domain: 'giocoso.forgenord.ca' },
     ],
     aboutEyebrow: '02 / About',
@@ -67,7 +69,7 @@ const copy = {
     aboutText: 'Forge Nord is a meeting point for independent projects across digital work, connected objects, and creative practice. Each initiative grows at its own pace; this page maps the way.',
     footer: 'Made in Canada',
     footerTop: 'Back to top',
-    aiDisclosure: 'Generative artificial intelligence was used in the design of this website. All content was reviewed by a person before publication.',
+    aiDisclosure: 'Generative AI was used as an engineering and writing assistant in the production of this website. All published content and technical decisions were reviewed and approved by Patrick Paul.',
   },
 } as const;
 
@@ -151,7 +153,7 @@ const currentPath = `/${language}/`;
               <article class="project-card">
                 <div class="card-top"><span>{project.number} / {project.category}</span><span class="card-rule" aria-hidden="true"></span></div>
                 <div class="card-main"><h3>{project.name}</h3><p>{project.description}</p></div>
-                <div class="card-bottom"><span class="status"><span class="status-dot" aria-hidden="true"></span>{t.soon}</span><span class="domain" aria-label={`${t.planned}: ${project.domain}`}>{project.domain}</span></div>
+                <div class="card-bottom"><span class="status"><span class:list={['status-dot', { 'status-dot-live': 'live' in project }]} aria-hidden="true"></span>{'live' in project ? t.live : t.soon}</span>{'live' in project ? <a class="domain" href={`https://${project.domain}/`}>{project.domain} <span aria-hidden="true">↗</span></a> : <span class="domain" aria-label={`${t.planned}: ${project.domain}`}>{project.domain}</span>}</div>
               </article>
             ))}
           </div>
@@ -258,7 +260,10 @@ const currentPath = `/${language}/`;
   .card-bottom { margin-top: auto; padding-top: 18px; border-top: 1px solid #35515d; }
   .status { display: inline-flex; align-items: center; gap: 9px; color: #c6e6e9; font-size: 11px; font-weight: 700; letter-spacing: .055em; white-space: nowrap; }
   .status-dot { width: 6px; height: 6px; border: 1px solid #93d8df; border-radius: 50%; }
+  .status-dot-live { border-color: #6be89b; background: #6be89b; box-shadow: 0 0 0 2px #6be89b22, 0 0 8px #6be89b88; }
   .domain { color: #8199a3; font-size: 11px; white-space: nowrap; }
+  a.domain { color: #c6e6e9; text-decoration: underline; text-underline-offset: 3px; }
+  a.domain:hover { color: #e8fcff; }
   .about-section { display: grid; grid-template-columns: 1fr 2fr; gap: 50px; padding: 65px 0 112px; border-top: 1px solid #29404c; }
   .about-section .section-label { margin-top: 8px; }
   .about-content { display: grid; grid-template-columns: 1fr 1fr; align-items: end; gap: 50px; }
