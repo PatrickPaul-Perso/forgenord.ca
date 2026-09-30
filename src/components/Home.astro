@@ -153,7 +153,7 @@ const currentPath = `/${language}/`;
               <article class="project-card">
                 <div class="card-top"><span>{project.number} / {project.category}</span><span class="card-rule" aria-hidden="true"></span></div>
                 <div class="card-main"><h3>{project.name}</h3><p>{project.description}</p></div>
-                <div class="card-bottom"><span class="status"><span class="status-dot" aria-hidden="true"></span>{'live' in project ? t.live : t.soon}</span>{'live' in project ? <a class="domain" href={`https://${project.domain}/`}>{project.domain} <span aria-hidden="true">↗</span></a> : <span class="domain" aria-label={`${t.planned}: ${project.domain}`}>{project.domain}</span>}</div>
+                <div class="card-bottom"><span class="status"><span class:list={['status-dot', { 'status-dot-live': 'live' in project }]} aria-hidden="true"></span>{'live' in project ? t.live : t.soon}</span>{'live' in project ? <a class="domain" href={`https://${project.domain}/`}>{project.domain} <span aria-hidden="true">↗</span></a> : <span class="domain" aria-label={`${t.planned}: ${project.domain}`}>{project.domain}</span>}</div>
               </article>
             ))}
           </div>
@@ -260,6 +260,7 @@ const currentPath = `/${language}/`;
   .card-bottom { margin-top: auto; padding-top: 18px; border-top: 1px solid #35515d; }
   .status { display: inline-flex; align-items: center; gap: 9px; color: #c6e6e9; font-size: 11px; font-weight: 700; letter-spacing: .055em; white-space: nowrap; }
   .status-dot { width: 6px; height: 6px; border: 1px solid #93d8df; border-radius: 50%; }
+  .status-dot-live { border-color: #6be89b; background: #6be89b; box-shadow: 0 0 0 2px #6be89b22, 0 0 8px #6be89b88; }
   .domain { color: #8199a3; font-size: 11px; white-space: nowrap; }
   a.domain { color: #c6e6e9; text-decoration: underline; text-underline-offset: 3px; }
   a.domain:hover { color: #e8fcff; }
