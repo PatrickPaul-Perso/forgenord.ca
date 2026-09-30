@@ -7,6 +7,18 @@
   },
   "previews": {},
   "preview_urls": true,
+  "observability": {
+    "logs": {
+      "enabled": true,
+      "invocation_logs": true,
+      "persist": true
+    },
+    "traces": {
+      "enabled": false,
+      "head_sampling_rate": 1,
+      "persist": true
+    }
+  },
   "routes": [
     {
       "pattern": "forgenord.ca",
