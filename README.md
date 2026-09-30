@@ -32,6 +32,19 @@ docker compose run --rm --user "$(id -u):$(id -g)" app npx wrangler deploy --dry
 
 Après toute modification des dépendances, mettre à jour `package-lock.json` avec npm dans ce même conteneur.
 
+## Déploiement Cloudflare Workers
+
+Le site Astro est généré en fichiers statiques dans `dist/`. La configuration `wrangler.jsonc` définit le Worker `forgenord-ca`, sert ce répertoire et associe le domaine personnalisé `forgenord.ca`. Aucun adaptateur Astro côté serveur n’est nécessaire.
+
+Après la fusion des changements dans `main`, dans le tableau de bord Cloudflare :
+
+1. Ouvrir **Workers & Pages** → **Create application** → **Import a repository**.
+2. Choisir le dépôt GitHub `PatrickPaul-Perso/forgenord.ca`, la branche `main` et la racine du dépôt (`/`). Nommer le Worker `forgenord-ca`.
+3. Définir **Build command** à `npm run build` et **Deploy command** à `npx wrangler deploy`.
+4. Vérifier ces paramètres, puis utiliser **Save and Deploy** pour lancer le premier déploiement depuis Workers Builds. Vérifier ensuite que le domaine `forgenord.ca` est actif dans **Domains & Routes**.
+
+Cette liaison GitHub est une opération du tableau de bord Cloudflare ; les commandes Docker ci-dessus servent aux vérifications locales et ne déploient rien.
+
 ## Licence
 
 Tous droits réservés, sauf indication contraire.
