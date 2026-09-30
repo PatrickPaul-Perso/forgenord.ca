@@ -32,6 +32,28 @@ docker compose run --rm --user "$(id -u):$(id -g)" app npx wrangler deploy --dry
 
 Après toute modification des dépendances, mettre à jour `package-lock.json` avec npm dans ce même conteneur.
 
+## Déploiement Cloudflare Workers
+
+Astro génère un site statique dans `dist/`. Le fichier `wrangler.jsonc` configure le Worker `forgenord-ca`, sert ces fichiers et associe `forgenord.ca` comme domaine personnalisé. Il ne faut ni script Worker ni adaptateur Astro côté serveur pour ce site statique.
+
+Le déploiement de production passe par [Workers Builds](https://developers.cloudflare.com/workers/ci-cd/builds/), déclenché depuis GitHub. Après la fusion de cette configuration dans `main` :
+
+1. Dans le compte Cloudflare qui contient la zone active `forgenord.ca`, ouvrir **Workers & Pages** → **Create application** → **Import a repository**.
+2. Autoriser l’accès GitHub si nécessaire, puis sélectionner `PatrickPaul-Perso/forgenord.ca` et créer le Worker avec les paramètres suivants :
+
+   | Paramètre | Valeur |
+   | --- | --- |
+   | Worker name | `forgenord-ca` |
+   | Production branch | `main` |
+   | Root directory | `/` |
+   | Build command | `npm run build` |
+   | Deploy command | `npx wrangler deploy` |
+
+3. Vérifier les paramètres, puis choisir **Save and Deploy**. Cette action lance le premier build et déploiement sur Cloudflare ; les prochains commits sur `main` déclencheront les suivants.
+4. Vérifier que le build réussit, que **Domains & Routes** affiche `forgenord.ca` comme domaine personnalisé du Worker et que `https://forgenord.ca` répond. La déclaration `routes` dans `wrangler.jsonc` permet à Wrangler de créer l’association du [domaine personnalisé](https://developers.cloudflare.com/workers/configuration/routing/custom-domains/) lors du déploiement.
+
+Le nom du Worker dans Cloudflare doit correspondre exactement au champ `name` de `wrangler.jsonc`. Les commandes Docker de la section Développement servent aux vérifications locales ; `--dry-run` ne publie rien.
+
 ## Licence
 
 Tous droits réservés, sauf indication contraire.
