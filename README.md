@@ -14,22 +14,23 @@ Le site est développé avec Astro et sera déployé sur Cloudflare Workers.
 
 ## Développement
 
-Le projet utilise Astro pour générer un site statique, servi sur Cloudflare Workers. Il faut Node.js 22.12 ou plus et npm, ou Docker pour exécuter les commandes sans installer Node sur la machine.
+Docker est l’environnement de développement commun. L’image Node est fixée dans `compose.yaml` et les dépendances dans `package-lock.json` ; les commandes Node.js, npm, Astro et Wrangler s’exécutent dans le conteneur, sans installation locale de Node.
+
+Depuis la racine du dépôt, installer les dépendances puis démarrer le serveur :
 
 ```sh
-npm ci
-npm run dev
-npm run build
+docker compose run --rm --user "$(id -u):$(id -g)" app npm ci
+docker compose run --rm --service-ports --user "$(id -u):$(id -g)" app
 ```
 
-Avec Docker, depuis la racine du dépôt :
+Le site est accessible sur `http://localhost:4321`. Pour construire le site et vérifier sa configuration Workers sans déploiement :
 
 ```sh
-docker run --rm --user "$(id -u):$(id -g)" -e npm_config_cache=/tmp/npm-cache -v "$PWD:/app" -w /app node:24-bookworm-slim npm ci
-docker run --rm --user "$(id -u):$(id -g)" -e npm_config_cache=/tmp/npm-cache -v "$PWD:/app" -w /app -p 4321:4321 node:24-bookworm-slim npm run dev -- --host 0.0.0.0
+docker compose run --rm --user "$(id -u):$(id -g)" app npm run build
+docker compose run --rm --user "$(id -u):$(id -g)" app npx wrangler deploy --dry-run
 ```
 
-Le serveur local est accessible sur `http://localhost:4321`. Pour vérifier le paquet Workers sans le publier, exécuter `npm run build`, puis `npx wrangler deploy --dry-run` (directement ou dans le conteneur). Le déploiement réel utilise `npm run deploy` après configuration de l’accès Cloudflare.
+Après toute modification des dépendances, mettre à jour `package-lock.json` avec npm dans ce même conteneur.
 
 ## Licence
 

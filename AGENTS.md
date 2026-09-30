@@ -16,3 +16,4 @@
 - Préférer la solution la plus simple qui répond à la demande, sans ajouter de dépendance inutile.
 - Mettre à jour la documentation et les tests lorsque le comportement concerné le justifie.
 - Ne jamais inclure de secrets ou de fichiers générés dans un commit.
+- Exécuter les commandes Node.js, npm, Astro et Wrangler dans le conteneur défini par `compose.yaml` ; ne pas dépendre d’une installation locale. Utiliser les commandes du `README.md`.
